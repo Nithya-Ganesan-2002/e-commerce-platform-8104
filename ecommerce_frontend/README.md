@@ -1,82 +1,63 @@
-# Lightweight React Template for KAVIA
+# KaviaShop React Frontend
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+Modern, responsive e-commerce UI for authentication, product catalog, cart, checkout, and orders.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Authentication: Register, Login, Logout, Profile
+- Product catalog: Search, Grid/List view, Product details
+- Cart: Add/Update/Remove items, totals
+- Checkout: Shipping + payment form, order creation
+- Orders: Order history page
+- Routing via react-router v6; Context-based state for auth and cart
+- Light, modern theme with responsive layout
 
 ## Getting Started
 
-In the project directory, you can run:
+1) Install dependencies:
+   npm install
 
-### `npm start`
+2) Configure environment (optional, defaults to localhost:3001):
+   cp .env.example .env
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3) Start development server:
+   npm start
 
-### `npm test`
+App runs at http://localhost:3000
 
-Launches the test runner in interactive watch mode.
+## Environment Variables
 
-### `npm run build`
+See .env.example
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- REACT_APP_API_BASE: Base URL of the backend REST API (default http://localhost:3001)
 
-## Customization
+## Project Structure
 
-### Colors
+- src/services/api.js — API wrapper for backend endpoints
+- src/context/AuthContext.js — Auth state (token, user, login/register/logout)
+- src/context/CartContext.js — Cart state synced to backend when logged in
+- src/pages/* — UI pages (Home, Products, ProductDetail, Cart, Checkout, Orders, Profile, Login, Register)
+- src/App.js — Router and layout (Header, Footer)
+- src/App.css — Theme and components styling
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+## Backend Integration
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+This app communicates with ecommerce_backend via REST on REACT_APP_API_BASE (defaults to http://localhost:3001) and expects:
+- Auth: POST /auth/login, /auth/register; GET /auth/me (JWT bearer)
+- Products: GET /products, GET /products/:id
+- Cart: GET /cart, POST /cart, PUT /cart, DELETE /cart/:productId, POST /cart/clear
+- Checkout & Orders: POST /checkout, GET /orders
 
-### Components
+Ensure CORS is enabled on the backend.
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+## Notes
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+- Tokens stored in localStorage under "auth_token"
+- Protected routes: /checkout, /orders, /profile
+- Minimal dependencies for performance
 
-## Learn More
+## Scripts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- npm start — dev server
+- npm run build — production build
+- npm test — run tests
